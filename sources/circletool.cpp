@@ -193,7 +193,7 @@ CircleTool circleTool;
 
 CreateCircleShapeUndo::CreateCircleShapeUndo(QRectF& rect, IwProject* prj,
                                              IwLayer* layer)
-    : m_project(prj), m_layer(layer) {
+    : m_project(prj), m_layer(layer), m_shape(nullptr) {
   // 円に近似したシェイプを作るためのハンドル長
   double handleRatio = 0.5522847;
 

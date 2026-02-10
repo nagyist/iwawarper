@@ -155,7 +155,6 @@ public:
 template <class T>
 class OpenPopupCommandHandler : public MenuItemHandler {
   T *m_popup;
-  CommandId m_id;
 
 public:
   OpenPopupCommandHandler(CommandId cmdId)

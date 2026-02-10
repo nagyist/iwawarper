@@ -193,8 +193,9 @@ void CommandManager::setShortcut(QAction *action, std::string shortcutString,
 
   // Cerco il nodo corrispondente ad action. Deve esistere
   std::map<QAction *, Node *>::iterator it = m_qactionTable.find(action);
-  Node *node = it != m_qactionTable.end() ? it->second : 0;
+  Node *node = it != m_qactionTable.end() ? it->second : nullptr;
   assert(node);
+  if (!node) return;
   assert(node->m_qaction == action);
 
   QKeySequence ks(shortcut);
@@ -305,7 +306,7 @@ void CommandManager::loadShortcuts() {
 }
 //---------------------------------------------------------
 
-MenuItemHandler::MenuItemHandler(const char *cmdId) {
+MenuItemHandler::MenuItemHandler(CommandId cmdId) {
   CommandManager::instance()->setHandler(
       cmdId, new CommandHandlerHelper<MenuItemHandler>(
                  this, &MenuItemHandler::execute));

@@ -34,7 +34,7 @@ typedef struct CorrPoint {
   // 対応点のウェイト（歪みを引き寄せる）
   double weight;
   // 対応点の奥行（小さいほどカメラに近い＝手前になる） ※TOの値のみ用いる
-  double depth = 1.;
+  double depth;
 
   bool operator==(const CorrPoint& other) const {
     return (value == other.value && weight == other.weight &&
