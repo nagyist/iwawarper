@@ -39,6 +39,7 @@
 #include "ruler.h"
 #include "rendersettings.h"
 #include "projectutils.h"
+#include "preferences.h"
 
 #include <QPointF>
 #include <QVector3D>
@@ -210,6 +211,9 @@ void SceneViewer::initializeGL() {
 
   connect(context(), &QOpenGLContext::aboutToBeDestroyed, this,
           &SceneViewer::cleanup);
+
+  int vertexBufferSize = Preferences::instance()->vertexBufferSize();
+
   m_program_texture = new QOpenGLShaderProgram(this);
   m_program_texture->addShaderFromSourceFile(QOpenGLShader::Vertex,
                                              ":/tex_vert.glsl");
@@ -240,7 +244,7 @@ void SceneViewer::initializeGL() {
     m_vbo->bind();
   else
     std::cout << "failed to bind QOpenGLBuffer" << std::endl;
-  m_vbo->allocate(VertAmount * sizeof(MeshVertex));
+  m_vbo->allocate(vertexBufferSize * sizeof(MeshVertex));
 
   // 頂点インデックスオブジェクト
   if (m_ibo) {
@@ -252,7 +256,7 @@ void SceneViewer::initializeGL() {
     m_ibo->bind();
   else
     std::cout << "failed to bind IndexBuffer" << std::endl;
-  m_ibo->allocate(VertAmount * sizeof(GLint));
+  m_ibo->allocate(vertexBufferSize * sizeof(GLint));
 
   // Create Vertex Array Object
   if (m_vao) {
@@ -321,7 +325,7 @@ void SceneViewer::initializeGL() {
     m_line_vbo->bind();
   else
     std::cout << "failed to bind QOpenGLBuffer" << std::endl;
-  m_line_vbo->allocate(VertAmount * sizeof(QVector3D));
+  m_line_vbo->allocate(vertexBufferSize * sizeof(QVector3D));
 
   // Create Vertex Array Object
   if (m_line_vao) {
@@ -821,6 +825,9 @@ void SceneViewer::drawGLPreview() {
         }
         //----
 
+        int maxVertCount = Preferences::instance()->vertexBufferSize();
+        maxVertCount -= maxVertCount % 3;
+
         int vertCount  = IwTriangleCache::instance()->vertexCount(frame, shape);
         int pointCount = IwTriangleCache::instance()->pointCount(frame, shape);
 
@@ -834,28 +841,39 @@ void SceneViewer::drawGLPreview() {
         m_vbo->unmap();
 
         m_ibo->bind();
-        auto iptr = m_ibo->map(QOpenGLBuffer::WriteOnly);
-        memcpy(iptr, ids, sizeof(int) * vertCount);
-        m_ibo->unmap();
 
-        glDrawElements(GL_TRIANGLES, vertCount, GL_UNSIGNED_INT, (void*)0);
+        // 確保できているメモリ分ごとに区切って描画する
+        int doneVertCount = 0;
+        int restVertCount = vertCount;
+        while (restVertCount > 0) {
+          int tmpVertCount = std::min(restVertCount, maxVertCount);
 
-        if (matteTexture) matteTexture->release();
+          auto iptr = m_ibo->map(QOpenGLBuffer::WriteOnly);
+          memcpy(iptr, &ids[doneVertCount], sizeof(int) * tmpVertCount);
+          m_ibo->unmap();
 
-        // メッシュを表示
-        if (settings->isMeshVisible()) {
-          m_program_meshLine->bind();
-          m_program_meshLine->setUniformValue(
-              u_meshLine_color, QColor::fromRgbF(0.5, 1.0, 0.0, 0.4));
-          m_program_meshLine->setUniformValue(
-              u_meshLine_matrix, m_viewProjMatrix * m_modelMatrix.top());
+          glDrawElements(GL_TRIANGLES, tmpVertCount, GL_UNSIGNED_INT, (void*)0);
 
-          glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-          glDrawElements(GL_TRIANGLES, vertCount, GL_UNSIGNED_INT, (void*)0);
-          glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+          // メッシュを表示
+          if (settings->isMeshVisible()) {
+            m_program_meshLine->bind();
+            m_program_meshLine->setUniformValue(
+                u_meshLine_color, QColor::fromRgbF(0.5, 1.0, 0.0, 0.4));
+            m_program_meshLine->setUniformValue(
+                u_meshLine_matrix, m_viewProjMatrix * m_modelMatrix.top());
 
-          m_program_texture->bind();
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glDrawElements(GL_TRIANGLES, tmpVertCount, GL_UNSIGNED_INT,
+                           (void*)0);
+            glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+
+            m_program_texture->bind();
+          }
+
+          doneVertCount += tmpVertCount;
+          restVertCount -= tmpVertCount;
         }
+        if (matteTexture) matteTexture->release();
 
         m_ibo->release();
       }

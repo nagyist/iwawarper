@@ -16,8 +16,6 @@ struct Vertex {
   double uv[2];
 };
 
-#define VertAmount 100000
-
 class MeshVertex {
   QVector3D m_position;
   QVector2D m_uv;

@@ -14,8 +14,6 @@ class QCheckBox;
 class SettingsDialog : public IwDialog {
   Q_OBJECT
 
-  // Preference‚æ‚è
-  QComboBox* m_bezierPrecisionCombo;
   // RenderSettings‚æ‚è
   MyIntSlider* m_warpPrecisionSlider;
   MyIntSlider* m_faceSizeThresSlider;
@@ -24,6 +22,10 @@ class SettingsDialog : public IwDialog {
   MyIntSlider* m_imageShrinkSlider;
   QCheckBox* m_antialiasCheckBox;
   MyIntSlider* m_matteDilateSlider;
+
+  // Preference‚æ‚è
+  QComboBox* m_bezierPrecisionCombo;
+  QLineEdit* m_vertexBufferSizeEdit;
 
 public:
   SettingsDialog();
@@ -36,8 +38,6 @@ protected:
 protected slots:
   void onProjectSwitched();
 
-  // Preference‚æ‚è
-  void onBezierPrecisionComboChanged(int index);
   // RenderSettings‚æ‚è
   void onPrecisionValueChanged(bool isDragging);
   void onFaceSizeValueChanged(bool isDragging);
@@ -46,6 +46,9 @@ protected slots:
   void onImageShrinkChanged(bool isDragging);
   void onAntialiasClicked(bool on);
   void onMatteDilateValueChanged(bool isDragging);
+  // Preference‚æ‚è
+  void onBezierPrecisionComboChanged(int index);
+  void onVertexBufferSizeEdited();
 };
 
 #endif

@@ -38,6 +38,9 @@ private:
 
   QString m_language;
 
+  // ‹N“®‚Éƒƒ‚ƒŠ‚ğŠm•Û‚·‚éÅ‘å’¸“_”
+  int m_vertexBufferSize;
+
   Preferences();
 
   void loadSettings();
@@ -64,6 +67,9 @@ public:
 
   QString language() const { return m_language; }
   void setLanguage(QString lang) { m_language = lang; }
+
+  int vertexBufferSize() const { return m_vertexBufferSize; }
+  void setVertexBufferSize(const int count) { m_vertexBufferSize = count; }
 };
 
 #endif

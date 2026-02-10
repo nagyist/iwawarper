@@ -19,16 +19,17 @@
 #include <QLineEdit>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QGridLayout>
 #include <QLabel>
 #include <QCheckBox>
+#include <QGroupBox>
+#include <QIntValidator>
 
 //------------------------------------
 SettingsDialog::SettingsDialog()
     : IwDialog(IwApp::instance()->getMainWindow(), "SettingsDialog", false) {
   setWindowTitle(tr("Settings"));
   //-- オブジェクトの宣言
-  // Preferenceより
-  m_bezierPrecisionCombo = new QComboBox(this);
   // RenderSettingsより
   m_warpPrecisionSlider = new MyIntSlider(0, 5, this);
   m_faceSizeThresSlider = new MyIntSlider(10, 50, this);
@@ -37,6 +38,10 @@ SettingsDialog::SettingsDialog()
   m_imageShrinkSlider   = new MyIntSlider(1, 4, this);
   m_antialiasCheckBox   = new QCheckBox(tr("Shape Antialias"), this);
   m_matteDilateSlider   = new MyIntSlider(0, 3, this);
+
+  // Preferenceより
+  m_bezierPrecisionCombo = new QComboBox(this);
+  m_vertexBufferSizeEdit = new QLineEdit(this);
 
   //-- プロパティの設定
   m_bezierPrecisionCombo->addItem(tr("Low"), Preferences::LOW);
@@ -59,40 +64,85 @@ SettingsDialog::SettingsDialog()
       "such as those commonly used in the Japanese animation industry \n"
       "for character Levels."));
 
+  m_vertexBufferSizeEdit->setValidator(new QIntValidator(10000, INT_MAX));
+  m_vertexBufferSizeEdit->setFixedWidth(100);
+
+  QLabel* note = new QLabel(
+      tr("* Changes will take effect the next time you run IwaWarper"));
+  note->setStyleSheet("font-size: 10px; font: italic;");
+
   //-- レイアウト
   QVBoxLayout* mainLay = new QVBoxLayout();
-  mainLay->setSpacing(5);
+  mainLay->setSpacing(10);
   mainLay->setMargin(10);
   {
-    mainLay->addWidget(new QLabel(tr("Bezier Precision:")), 0);
-    mainLay->addWidget(m_bezierPrecisionCombo, 0);
-    mainLay->addSpacing(3);
-    mainLay->addWidget(new QLabel(tr("Number of subdivision:")), 0);
-    mainLay->addWidget(m_warpPrecisionSlider, 0);
-    mainLay->addSpacing(3);
-    mainLay->addWidget(new QLabel(tr("Maximum face size:")), 0);
-    mainLay->addWidget(m_faceSizeThresSlider, 0);
-    mainLay->addSpacing(3);
-    mainLay->addWidget(new QLabel(tr("Alpha Mode:")), 0);
-    mainLay->addWidget(m_alphaModeCombo, 0);
-    mainLay->addSpacing(3);
-    mainLay->addWidget(new QLabel(tr("Resample Mode:")), 0);
-    mainLay->addWidget(m_resampleModeCombo, 0);
-    mainLay->addSpacing(3);
-    mainLay->addWidget(m_antialiasCheckBox, 0);
-    mainLay->addSpacing(3);
-    mainLay->addWidget(new QLabel(tr("Image Shrink:")), 0);
-    mainLay->addWidget(m_imageShrinkSlider, 0);
-    mainLay->addSpacing(3);
-    mainLay->addWidget(new QLabel(tr("Matte Dilate:")), 0);
-    mainLay->addWidget(m_matteDilateSlider, 0);
+    QGroupBox* projectSettingsBox = new QGroupBox(tr("Project Settings"), this);
+    QGridLayout* projectSettingsLay = new QGridLayout();
+    projectSettingsLay->setHorizontalSpacing(5);
+    projectSettingsLay->setVerticalSpacing(8);
+    projectSettingsLay->setMargin(10);
+    {
+      projectSettingsLay->addWidget(new QLabel(tr("Number of subdivision:")), 0,
+                                    0, Qt::AlignRight | Qt::AlignVCenter);
+      projectSettingsLay->addWidget(m_warpPrecisionSlider, 0, 1);
+
+      projectSettingsLay->addWidget(new QLabel(tr("Maximum face size:")), 1, 0,
+                                    Qt::AlignRight | Qt::AlignVCenter);
+      projectSettingsLay->addWidget(m_faceSizeThresSlider, 1, 1);
+
+      projectSettingsLay->addWidget(new QLabel(tr("Alpha Mode:")), 2, 0,
+                                    Qt::AlignRight | Qt::AlignVCenter);
+      projectSettingsLay->addWidget(m_alphaModeCombo, 2, 1,
+                                    Qt::AlignLeft | Qt::AlignVCenter);
+
+      projectSettingsLay->addWidget(new QLabel(tr("Resample Mode:")), 3, 0,
+                                    Qt::AlignRight | Qt::AlignVCenter);
+      projectSettingsLay->addWidget(m_resampleModeCombo, 3, 1,
+                                    Qt::AlignLeft | Qt::AlignVCenter);
+
+      projectSettingsLay->addWidget(m_antialiasCheckBox, 4, 0, 1, 2);
+
+      projectSettingsLay->addWidget(new QLabel(tr("Image Shrink:")), 5, 0,
+                                    Qt::AlignRight | Qt::AlignVCenter);
+      projectSettingsLay->addWidget(m_imageShrinkSlider, 5, 1);
+
+      projectSettingsLay->addWidget(new QLabel(tr("Matte Dilate:")), 6, 0,
+                                    Qt::AlignRight | Qt::AlignVCenter);
+      projectSettingsLay->addWidget(m_matteDilateSlider, 6, 1);
+    }
+    projectSettingsLay->setColumnStretch(0, 0);
+    projectSettingsLay->setColumnStretch(1, 1);
+    projectSettingsBox->setLayout(projectSettingsLay);
+    mainLay->addWidget(projectSettingsBox, 0);
+
+    QGroupBox* userPreferencesBox = new QGroupBox(tr("User Preferences"), this);
+    QGridLayout* userPreferencesLay = new QGridLayout();
+    userPreferencesLay->setHorizontalSpacing(5);
+    userPreferencesLay->setVerticalSpacing(8);
+    userPreferencesLay->setMargin(10);
+    {
+      userPreferencesLay->addWidget(new QLabel(tr("Bezier Precision:")), 0, 0,
+                                    Qt::AlignRight | Qt::AlignVCenter);
+      userPreferencesLay->addWidget(m_bezierPrecisionCombo, 0, 1,
+                                    Qt::AlignLeft | Qt::AlignVCenter);
+
+      userPreferencesLay->addWidget(new QLabel(tr("Vertex Buffer Size*:")), 1,
+                                    0, Qt::AlignRight | Qt::AlignVCenter);
+      userPreferencesLay->addWidget(m_vertexBufferSizeEdit, 1, 1,
+                                    Qt::AlignLeft | Qt::AlignVCenter);
+    }
+    userPreferencesLay->setColumnStretch(0, 0);
+    userPreferencesLay->setColumnStretch(1, 1);
+    userPreferencesBox->setLayout(userPreferencesLay);
+    mainLay->addWidget(userPreferencesBox, 0);
+
+    mainLay->addWidget(note, 0);
+
     mainLay->addStretch(1);
   }
   setLayout(mainLay);
 
   //-- シグナル／スロット接続
-  connect(m_bezierPrecisionCombo, SIGNAL(activated(int)), this,
-          SLOT(onBezierPrecisionComboChanged(int)));
   connect(m_warpPrecisionSlider, SIGNAL(valueChanged(bool)), this,
           SLOT(onPrecisionValueChanged(bool)));
   connect(m_faceSizeThresSlider, SIGNAL(valueChanged(bool)), this,
@@ -107,6 +157,11 @@ SettingsDialog::SettingsDialog()
           SLOT(onAntialiasClicked(bool)));
   connect(m_matteDilateSlider, SIGNAL(valueChanged(bool)), this,
           SLOT(onMatteDilateValueChanged(bool)));
+
+  connect(m_bezierPrecisionCombo, SIGNAL(activated(int)), this,
+          SLOT(onBezierPrecisionComboChanged(int)));
+  connect(m_vertexBufferSizeEdit, SIGNAL(editingFinished()), this,
+          SLOT(onVertexBufferSizeEdited()));
 }
 
 //------------------------------------
@@ -142,6 +197,8 @@ void SettingsDialog::onProjectSwitched() {
   int prec = (int)Preferences::instance()->getBezierActivePrecision();
   m_bezierPrecisionCombo->setCurrentIndex(
       m_bezierPrecisionCombo->findData(prec));
+  m_vertexBufferSizeEdit->setText(
+      QString::number(Preferences::instance()->vertexBufferSize()));
 
   RenderSettings* settings = project->getRenderSettings();
   if (settings) {
@@ -164,11 +221,21 @@ void SettingsDialog::onBezierPrecisionComboChanged(int /*index*/) {
   IwProject* project = IwApp::instance()->getCurrentProject()->getProject();
   if (!project) return;
   Preferences::BezierActivePrecision prec =
-      (Preferences::BezierActivePrecision)(
-          m_bezierPrecisionCombo->currentData().toInt());
+      (Preferences::BezierActivePrecision)(m_bezierPrecisionCombo->currentData()
+                                               .toInt());
   Preferences::instance()->setBezierActivePrecision(prec);
 
   IwApp::instance()->getCurrentProject()->notifyViewSettingsChanged();
+}
+
+void SettingsDialog::onVertexBufferSizeEdited() {
+  bool ok;
+  int count = m_vertexBufferSizeEdit->text().toInt(&ok);
+  if (ok)
+    Preferences::instance()->setVertexBufferSize(count);
+  else
+    m_vertexBufferSizeEdit->setText(
+        QString::number(Preferences::instance()->vertexBufferSize()));
 }
 
 //------------------------------------

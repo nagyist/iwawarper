@@ -11,7 +11,8 @@ Preferences::Preferences()
     : m_bezierActivePrecision(MEDIUM)
     , m_lockThreshold(50)
     , m_showSelectedShapesOnly(false)
-    , m_language("English") {
+    , m_language("English")
+    , m_vertexBufferSize(100000) {
   loadSettings();
 }
 
@@ -44,6 +45,8 @@ void Preferences::loadSettings() {
       settings.value("ShowSelectedShapesOnly", m_showSelectedShapesOnly)
           .toBool();
   m_language = settings.value("Language", m_language).toString();
+  m_vertexBufferSize =
+      settings.value("VertexBufferSize", m_vertexBufferSize).toInt();
   settings.endGroup();
 }
 
@@ -61,6 +64,7 @@ void Preferences::saveSettings() {
   settings.setValue("LockThreshold", (int)m_lockThreshold);
   settings.setValue("ShowSelectedShapesOnly", m_showSelectedShapesOnly);
   settings.setValue("Language", m_language);
+  settings.setValue("VertexBufferSize", m_vertexBufferSize);
 
   settings.endGroup();
 }

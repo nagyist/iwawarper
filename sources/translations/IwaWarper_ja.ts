@@ -486,22 +486,22 @@ Remove its shapes?</source>
 <context>
     <name>IwShapePairSelection</name>
     <message>
-        <location filename="../iwshapepairselection.cpp" line="573"/>
+        <location filename="../iwshapepairselection.cpp" line="574"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../iwshapepairselection.cpp" line="574"/>
+        <location filename="../iwshapepairselection.cpp" line="575"/>
         <source>No shapes are selected.</source>
         <translation>シェイプが選択されていません。</translation>
     </message>
     <message>
-        <location filename="../iwshapepairselection.cpp" line="597"/>
+        <location filename="../iwshapepairselection.cpp" line="598"/>
         <source>Info</source>
         <translation>通知</translation>
     </message>
     <message>
-        <location filename="../iwshapepairselection.cpp" line="598"/>
+        <location filename="../iwshapepairselection.cpp" line="599"/>
         <source>%1 shapes are exported successfully.</source>
         <translation>%1個のシェイプがエクスポートされました。</translation>
     </message>
@@ -1215,25 +1215,25 @@ Remove its shapes?</source>
         <translation>円形</translation>
     </message>
     <message>
-        <location filename="../sceneviewer.cpp" line="2058"/>
+        <location filename="../sceneviewer.cpp" line="2088"/>
         <location filename="../iwrendercommand.cpp" line="98"/>
         <location filename="../iwrendercommand.cpp" line="116"/>
         <source>Output Settings Error</source>
         <translation>出力設定エラー</translation>
     </message>
     <message>
-        <location filename="../sceneviewer.cpp" line="2059"/>
+        <location filename="../sceneviewer.cpp" line="2089"/>
         <location filename="../iwrendercommand.cpp" line="117"/>
         <source>Output directory is not set.</source>
         <translation>保存先が設定されていません。</translation>
     </message>
     <message>
-        <location filename="../sceneviewer.cpp" line="2066"/>
+        <location filename="../sceneviewer.cpp" line="2096"/>
         <source>Do you want to create folder?</source>
         <translation>フォルダを作成しますか？</translation>
     </message>
     <message>
-        <location filename="../sceneviewer.cpp" line="2076"/>
+        <location filename="../sceneviewer.cpp" line="2106"/>
         <source>Failed to create folder.</source>
         <translation>フォルダの作成に失敗しました。</translation>
     </message>
@@ -1581,12 +1581,12 @@ What would you like to do?</source>
 <context>
     <name>SceneViewer</name>
     <message>
-        <location filename="../sceneviewer.cpp" line="1431"/>
+        <location filename="../sceneviewer.cpp" line="1461"/>
         <source>Change Current Layer</source>
         <translation>現在のレイヤーを切り替え</translation>
     </message>
     <message>
-        <location filename="../sceneviewer.cpp" line="1453"/>
+        <location filename="../sceneviewer.cpp" line="1483"/>
         <source>Unlock All Shapes</source>
         <translation>全てのシェイプのロックを解除</translation>
     </message>
@@ -1605,52 +1605,52 @@ What would you like to do?</source>
 <context>
     <name>SettingsDialog</name>
     <message>
-        <location filename="../settingsdialog.cpp" line="28"/>
+        <location filename="../settingsdialog.cpp" line="31"/>
         <source>Settings</source>
         <translation>設定</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="38"/>
+        <location filename="../settingsdialog.cpp" line="39"/>
         <source>Shape Antialias</source>
         <translation>シェイプのアンチエイリアス</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="42"/>
+        <location filename="../settingsdialog.cpp" line="47"/>
         <source>Low</source>
         <translation>低</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="43"/>
+        <location filename="../settingsdialog.cpp" line="48"/>
         <source>Medium</source>
         <translation>中</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="44"/>
+        <location filename="../settingsdialog.cpp" line="49"/>
         <source>High</source>
         <translation>高</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="45"/>
+        <location filename="../settingsdialog.cpp" line="50"/>
         <source>Super High</source>
         <translation>最高</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="52"/>
+        <location filename="../settingsdialog.cpp" line="57"/>
         <source>Area Average</source>
         <translation>平均値</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="53"/>
+        <location filename="../settingsdialog.cpp" line="58"/>
         <source>Nearest Neighbor</source>
         <translation>ニアレストネイバー</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="54"/>
+        <location filename="../settingsdialog.cpp" line="59"/>
         <source>Morphological Supersampling</source>
         <translation>形態学的スーパーサンプリング</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="56"/>
+        <location filename="../settingsdialog.cpp" line="61"/>
         <source>PLEASE NOTE: The &quot;Morphological Supersampling&quot; option is intended 
 to be used when deforming so-called &quot;color binary images&quot;, 
 such as those commonly used in the Japanese animation industry 
@@ -1660,32 +1660,52 @@ for character Levels.</source>
 いわゆるカラー二値画像を変形するときに用いられることを想定しています。</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="67"/>
+        <location filename="../settingsdialog.cpp" line="71"/>
+        <source>* Changes will take effect the next time you run IwaWarper</source>
+        <translation>＊ 変更は次回のIwaWarper起動時に適用されます</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.cpp" line="79"/>
+        <source>Project Settings</source>
+        <translation>プロジェクト設定</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.cpp" line="110"/>
+        <source>User Preferences</source>
+        <translation>ユーザー環境設定</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.cpp" line="116"/>
         <source>Bezier Precision:</source>
         <translation>ベジエ曲線の精度：</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="70"/>
+        <location filename="../settingsdialog.cpp" line="119"/>
+        <source>Vertex Buffer Size*:</source>
+        <translation type="unfinished">頂点バッファのサイズ*：</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.cpp" line="85"/>
         <source>Number of subdivision:</source>
         <translation>メッシュ分割の回数：</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="73"/>
+        <location filename="../settingsdialog.cpp" line="88"/>
         <source>Maximum face size:</source>
         <translation>最大メッシュサイズ：</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="79"/>
+        <location filename="../settingsdialog.cpp" line="94"/>
         <source>Resample Mode:</source>
         <translation>リサンプル方式：</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="84"/>
+        <location filename="../settingsdialog.cpp" line="99"/>
         <source>Image Shrink:</source>
         <translation>画像テクスチャの粗さ：</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="87"/>
+        <location filename="../settingsdialog.cpp" line="102"/>
         <source>Matte Dilate:</source>
         <translation>アルファマットを拡張：</translation>
     </message>
@@ -1694,7 +1714,7 @@ for character Levels.</source>
         <translation type="vanished">ワープ品質：</translation>
     </message>
     <message>
-        <location filename="../settingsdialog.cpp" line="76"/>
+        <location filename="../settingsdialog.cpp" line="91"/>
         <source>Alpha Mode:</source>
         <translation>アルファチャンネルの操作：</translation>
     </message>
@@ -1732,27 +1752,27 @@ for character Levels.</source>
 <context>
     <name>ShapePair</name>
     <message>
-        <location filename="../shapepair.cpp" line="356"/>
+        <location filename="../shapepair.cpp" line="360"/>
         <source>Shape</source>
         <translation>シェイプ</translation>
     </message>
     <message>
-        <location filename="../shapepair.cpp" line="1657"/>
+        <location filename="../shapepair.cpp" line="1689"/>
         <source>Form</source>
         <translation>形状</translation>
     </message>
     <message>
-        <location filename="../shapepair.cpp" line="1657"/>
+        <location filename="../shapepair.cpp" line="1689"/>
         <source>Corr</source>
         <translation>対応点</translation>
     </message>
     <message>
-        <location filename="../shapepair.cpp" line="1659"/>
+        <location filename="../shapepair.cpp" line="1691"/>
         <source>From </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../shapepair.cpp" line="1659"/>
+        <location filename="../shapepair.cpp" line="1691"/>
         <source>To </source>
         <translation></translation>
     </message>
@@ -1992,7 +2012,7 @@ Assign shortcut sequence anyway?</source>
 <context>
     <name>TimeLineWindow</name>
     <message>
-        <location filename="../timelinewindow.cpp" line="1521"/>
+        <location filename="../timelinewindow.cpp" line="1529"/>
         <source>Timeline</source>
         <translation>タイムライン</translation>
     </message>
